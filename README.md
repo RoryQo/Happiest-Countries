@@ -1,4 +1,4 @@
-# Happies-Countries
+# Happiest-Countries
 
 #### Results
 After viewing the correlogram, we can see the data is highly correlated; because of this, we continue with Principal component analysis. We then create clusters from the PCA to determine the countries HELP should focus on. From our plot, we can see that 3 is the optimal number of clusters, and from these clusters, we can see that the PAM clustering is equivalent to k means clustering as there is a difference of only 2 out of over 150 countries.
