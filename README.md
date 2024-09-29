@@ -1,19 +1,47 @@
-# Happiest-Countries
+# Project: Analysis of the Happiest Countries
 
-#### Results
-After viewing the correlogram, we can see the data is highly correlated; because of this, we continue with Principal component analysis. We then create clusters from the PCA to determine the happiest countries. From our plot, we can see that 3 is the optimal number of clusters, and from these clusters, we can see that the PAM clustering is equivalent to k means clustering, as there is a difference of only 2 out of over 150 countries.
+## Table of Contents
+1. [Overview](#overview)
+2. [Results](#results)
+3. [Data](#data)
+4. [Setup](#setup)
+5. [Analysis Steps](#analysis-steps)
+6. [Conclusion](#conclusion)
+7. [List of Happiest Countries](#list-of-happiest-countries)
 
-After we separated the countries into clusters, we created data visualizations factored by cluster, with some of the top contributors from the PCA (GDP/capita, and Social Support. These visualizations show that cluster 1 is consistently (and statistically significantly) better off than the other 2. The countries in this cluster are the ones that are the happiest. Cluster 1 has 25 countries in it, a full list of these countries is displayed on the last page.
+## Overview
+This project investigates the factors contributing to happiness across countries, utilizing the 2018 World Happiness Report dataset. We perform Principal Component Analysis (PCA) to uncover the underlying structure of happiness-related variables and apply clustering techniques to identify groups of countries with similar happiness profiles.
 
-#### Data
-The World Happiness Report is a landmark survey of the state of global happiness. The first report was published in 2012. We will explore the 2018 data.
+## Results
+Through our analysis, we found that the data exhibited high correlations among variables, prompting the use of PCA. The optimal number of clusters determined was three. Interestingly, our findings revealed that the Partitioning Around Medoids (PAM) clustering method yielded nearly identical results to k-means clustering, with only two discrepancies among over 150 countries.
 
-+ `Overall rank:` Happiness rank; numeric. Range: 1 to 156
-+ `Country or region:` Character. 156 values
-+ `Score:` or subjective well-being; numeric. Range: 0 to 10
-+ `GDP per capita`
-+ `Social support`: the national average of the binary responses (either 0 or 1) to the GWP question “If you were in trouble, do you have relatives or friends you can count on to help you whenever you need them, or not?”
-+ `Healthy life expectancy`
-+ `Freedom to make life choices:` the national average of responses to the GWP question “Are you satisfied or dissatisfied with your freedom to choose what you do with your life?”
-+ `Generosity:` the residual of regressing national average of response to the GWP question “Have you donated money to a charity in the past month?” on GDP per capita.
-+ `Perceptions of corruption:` the national average of the survey responses to two questions in the GWP: “Is corruption widespread throughout the government or not” and “Is corruption widespread within businesses or not?”
+After clustering, we visualized key contributing factors such as GDP per capita and social support. The results indicated that Cluster 1, which contains the happiest countries, consistently outperformed the other clusters in these metrics. This cluster comprises 25 countries, which are listed at the end of this document.
+
+## Data
+The dataset used is the World Happiness Report from 2018, which surveys the state of global happiness based on various factors. Key variables include:
+
+- **Overall Rank:** Numeric happiness rank (1 to 156).
+- **Country or Region:** The name of the country or region.
+- **Score:** A measure of subjective well-being (0 to 10).
+- **GDP per Capita:** A measure of economic performance.
+- **Social Support:** The national average of binary responses regarding social support.
+- **Healthy Life Expectancy:** The average number of years a person is expected to live in good health.
+- **Freedom to Make Life Choices:** Satisfaction with freedom in life choices.
+- **Generosity:** The residual from regressing charitable donations on GDP per capita.
+- **Perceptions of Corruption:** Survey responses regarding corruption in government and businesses.
+
+## Setup
+To begin, load the necessary libraries and import the dataset.
+
+## Analysis Steps
+1. **Data Preparation:** Clean the dataset by removing irrelevant columns and handling missing values.
+2. **Exploratory Data Analysis:** Visualize correlations among key variables.
+3. **Principal Component Analysis (PCA):** Perform PCA to reduce dimensionality and identify key contributors to happiness.
+4. **Clustering:** Apply k-means and PAM clustering methods to segment countries into distinct clusters based on PCA results.
+5. **Visualization:** Create plots to illustrate the relationships between clusters and happiness metrics.
+
+## Conclusion
+This analysis demonstrates the effectiveness of PCA and clustering in identifying the happiest countries and their associated characteristics. The insights gained reveal that economic and social factors significantly contribute to overall happiness. A complete list of the happiest countries in Cluster 1 can be found in the final section of this document.
+
+## List of Happiest Countries
+A full list of the countries classified in Cluster 1 can be displayed at the end of your analysis code.
