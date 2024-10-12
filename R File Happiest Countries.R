@@ -1,0 +1,113 @@
+## ----warning=F,message=F-------------------------------------------
+library(tidyverse)
+library(dplyr)
+library(factoextra)
+library(cluster)
+library(gridExtra)
+
+# Load data
+happiness_0 = read_csv("happiness_2018.csv", show_col_types = FALSE)
+
+happiness_1 = happiness_0 %>% 
+ mutate(Corruption = as.numeric(`Perceptions of corruption`)) 
+
+# Remove NA values
+happiness_2 = happiness_1 %>% drop_na()
+dim(happiness_1)
+
+
+happiness_1 = happiness_2 %>% 
+ select(-c(`Overall rank`, `Country or region`,`Perceptions of corruption`)) 
+
+
+## ------------------------------------------------------------------
+# Correlogram
+pairs(happiness_1[,1:4], pch = 19)
+
+
+## ------------------------------------------------------------------
+# Create A PCA
+pc.happiness = happiness_1 %>% 
+ select(-Score) %>% 
+ prcomp(scale=TRUE)
+pc.happiness
+
+
+## ------------------------------------------------------------------
+# Visualize top contributors
+fviz_contrib(pc.happiness,choice="var", axes=1, top=5)
+
+
+## ----warning=F-----------------------------------------------------
+# Graph Explantory power of variables
+PRVar<- pc.happiness$sdev^2
+PVE<- PRVar[1:9]/sum(PRVar)
+
+PC=1:9
+data=data.frame(PC, PVE)
+ggplot(data=data, aes(x=PC, y=PVE))+
+ geom_line(color="navy")+
+ geom_point(aes(x=3,y=0.1),cex=5,color="orange",alpha=0.3)+
+ geom_point(color="red",cex=2)+
+ labs(title="Proportion of Variance Explained", x="Principal Component",y="pve")+
+ scale_x_continuous(breaks = 1:9)
+
+
+## ------------------------------------------------------------------
+# View scatterplot of greatest contributors from PCA
+PC12 <- pc.happiness$x %>% as_tibble() %>% select(1:2)
+pc.happiness$x %>% as_tibble() %>% select(PC1, PC2) %>%
+ bind_cols(happiness_1) %>% 
+ ggplot(aes(x = `PC1`, y = `PC2`)) + geom_point()
+
+
+## ------------------------------------------------------------------
+# Find optimal clusters
+happiness_4 = scale(happiness_1[,-1])
+fviz_nbclust(PC12, kmeans, method = "gap_stat")
+
+
+## ------------------------------------------------------------------
+km_mod = kmeans(happiness_4, centers=3)
+pam_mod = pam(happiness_4, 3)
+
+
+## ------------------------------------------------------------------
+# Create variable for cluster number in df
+PC12_cluster = happiness_1 %>% mutate(cluster=factor(pam_mod$cluster))
+
+
+## ------------------------------------------------------------------
+# Compare kmean and pam
+p1<-fviz_cluster(km_mod, data = happiness_4)
+
+p2<- fviz_cluster(pam_mod, data = happiness_4)
+
+grid.arrange(p1, p2, ncol=2)
+
+
+
+## ------------------------------------------------------------------
+# Create clusters with country name
+PC12_cluster <- PC12 %>% mutate(cluster = factor(pam_mod$cluster), countryOrRegion = factor(happiness_2$`Country or region`))
+
+
+
+
+## ------------------------------------------------------------------
+# View cluster diparity
+p1<-ggplot(PC12_cluster,aes(x=cluster,y=PC1,color=cluster)) + 
+  geom_boxplot()+ labs(title="GDP per Capita by Cluster")
+
+# Boxplot
+p2<-ggplot(PC12_cluster,aes(x=cluster,y=PC2 ,color=cluster)) + 
+  geom_boxplot()+ labs(title="Healthy Life Expectancy by Cluster")
+
+grid.arrange(p1, p2, ncol = 2)
+
+
+## ------------------------------------------------------------------
+# Filter and display the happiest countries
+as.data.frame(PC12_cluster %>% filter(cluster == 1) %>% select(countryOrRegion))
+
+
