@@ -1,4 +1,4 @@
-# Project: Analysis of the Happiest Countries
+# Project: Analysis of the Happiest Countries 
 
 ## Table of Contents 
 1. [Overview](#overview)
