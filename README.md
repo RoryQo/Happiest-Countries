@@ -14,7 +14,7 @@ This project investigates the factors contributing to happiness across countries
 
 ## Results
 Through our analysis, we found that the data exhibited high correlations among variables, prompting the use of PCA. The optimal number of clusters determined was three. Interestingly, our findings revealed that the Partitioning Around Medoids (PAM) clustering method yielded nearly identical results to k-means clustering, with only two discrepancies among over 150 countries.
-
+ 
 After clustering, we visualized key contributing factors such as GDP per capita and social support. The results indicated that Cluster 1, which contains the happiest countries, consistently outperformed the other clusters in these metrics. This cluster comprises 25 countries, which are listed at the end of this document.
 
 ## Data
